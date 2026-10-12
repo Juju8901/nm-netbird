@@ -1,0 +1,5 @@
+[VPN Connection]
+name=netbird
+service=org.freedesktop.NetworkManager.netbird
+program=/usr/libexec/nm-netbird-service
+supports-multiple-connections=false
