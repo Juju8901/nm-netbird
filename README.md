@@ -32,7 +32,7 @@ Connect clicked
 Grab the latest `.rpm` from [Releases](https://github.com/Juju8901/nm-netbird/releases) and install it:
 
 ```bash
-sudo dnf install ./nm-netbird-0.8.0-1.fc44.x86_64.rpm
+sudo dnf install ./nm-netbird-0.8.1-1.fc44.x86_64.rpm
 ```
 
 ### From source

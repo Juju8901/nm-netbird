@@ -1,5 +1,5 @@
 Name:           nm-netbird
-Version:        0.8.0
+Version:        0.8.1
 Release:        1%{?dist}
 Summary:        NetworkManager VPN plugin for NetBird
 License:        MIT
@@ -43,5 +43,8 @@ fi
 %config(noreplace) %{_sysconfdir}/NetworkManager/conf.d/nm-netbird.conf
 
 %changelog
+* Mon Oct 12 2026 Jeremiah Williams <jeremiahwilliams8901@gmail.com> - 0.8.1-1
+- Build against Fedora 44
+
 * Mon Oct 12 2026 Jeremiah Williams <jeremiahwilliams8901@gmail.com> - 0.8.0-1
 - Initial release
