@@ -27,13 +27,23 @@ Connect clicked
 
 ## Install
 
+### From RPM (Fedora / RHEL)
+
+Grab the latest `.rpm` from [Releases](https://github.com/Juju8901/nm-netbird/releases) and install it:
+
+```bash
+sudo dnf install ./nm-netbird-0.8.0-1.fc41.x86_64.rpm
+```
+
+### From source
+
 ```bash
 git clone https://github.com/Juju8901/nm-netbird
 cd nm-netbird
 sudo ./install.sh
 ```
 
-Then add the connection once:
+### Then add the connection once
 
 ```bash
 nmcli con add type vpn vpn-type netbird con-name 'NetBird'

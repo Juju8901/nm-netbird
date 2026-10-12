@@ -1,0 +1,4 @@
+/vendor/
+/nm-netbird-service
+/dist/
+*.rpm

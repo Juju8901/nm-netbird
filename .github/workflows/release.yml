@@ -1,0 +1,71 @@
+name: Build and Release RPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:41
+    steps:
+      - name: Install build tools
+        run: dnf install -y golang rpm-build rpmdevtools git tar gzip
+
+      - uses: actions/checkout@v4
+
+      - name: Mark workspace safe for git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Determine version
+        id: ver
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=0.8.0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Vendor Go dependencies
+        run: |
+          go mod tidy
+          go mod vendor
+
+      - name: Build source tarball
+        run: |
+          VERSION="${{ steps.ver.outputs.version }}"
+          rpmdev-setuptree
+          tar czf "$HOME/rpmbuild/SOURCES/nm-netbird-${VERSION}.tar.gz" \
+              --exclude='./.git' \
+              --exclude='./.github' \
+              --transform "s,^\.,nm-netbird-${VERSION}," \
+              .
+
+      - name: Build RPM
+        run: rpmbuild -ba nm-netbird.spec
+
+      - name: Collect artifacts
+        run: |
+          mkdir -p dist
+          cp "$HOME"/rpmbuild/RPMS/*/*.rpm dist/
+          cp "$HOME"/rpmbuild/SRPMS/*.rpm dist/
+          ls -l dist/
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rpm
+          path: dist/*.rpm
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.rpm
+          generate_release_notes: true
