@@ -1,6 +1,6 @@
 # nm-netbird
 
-> ⚠️ **Vibecoded.** This was written in one shot with Claude. It works (probably), but treat it accordingly — test before deploying, read the code before trusting it.
+> ⚠️ **Vibecoded.** This was written with the assistance of Claude. It works (probably), but treat it accordingly — test before deploying, read the code before trusting it.
 
 A NetworkManager VPN plugin that wraps [NetBird](https://github.com/netbirdio/netbird), letting you connect/disconnect from the GNOME network applet instead of a separate desktop UI.
 
